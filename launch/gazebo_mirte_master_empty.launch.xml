@@ -20,9 +20,9 @@
   <!-- Spawn MIRTE master -->
   <!-- This will listen to /mirte/cmd_vel -->
   <include file="$(find-pkg-share mirte_gazebo)/launch/spawn_mirte_master.launch.xml">
-    <arg name="x" value="1.0527"/>
-    <arg name="y" value="0.509611"/>
-    <arg name="z" value="0.021444"/>
+    <arg name="x" value="0.0"/>
+    <arg name="y" value="0.0"/>
+    <arg name="z" value="0.0"/>
   </include>
 
   <!-- And start the ROS2 controller for the arm -->

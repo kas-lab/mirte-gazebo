@@ -29,7 +29,7 @@ def generate_launch_description():
     robocup_home_world_path = os.path.join(
         pkg_robocup_home_simulation,
         'worlds',
-        'KRR_Course_Small_house.world')
+        'KRR_Course_Small_house_added_objects.world')
     
     pkg_mirte_gazebo = get_package_share_directory(
         'mirte_gazebo')
@@ -66,12 +66,16 @@ def generate_launch_description():
     aws_robomaker_small_house_world_models = os.path.join(
         pkg_aws_robomaker_small_house_world,
         'models')
+    
+    pkg_sdf_models = get_package_share_directory(
+        'sdf_models')
 
     return LaunchDescription([
         SetEnvironmentVariable(name='GAZEBO_MODEL_PATH', value=[
             EnvironmentVariable('GAZEBO_MODEL_PATH'),
             ':',plasys_house_world_models,
-            ':',aws_robomaker_small_house_world_models]),
+            ':',aws_robomaker_small_house_world_models,
+            ':',pkg_sdf_models]),
         mirte_navigation_launch,
         mirte_gazebo_launch,
     ])
