@@ -70,6 +70,21 @@ def generate_launch_description():
     pkg_sdf_models = get_package_share_directory(
         'sdf_models')
 
+
+    pkg_mirte_skills = get_package_share_directory(
+            'krr_mirte_skills')
+    pkg_mirte_skills_launch_path = os.path.join(
+        pkg_mirte_skills,
+        'launch',
+        'mirte_skills.launch.xml')
+    mirte_skills_launch = IncludeLaunchDescription(
+        XMLLaunchDescriptionSource(pkg_mirte_skills_launch_path),
+        launch_arguments={
+           
+        }.items()
+    )
+
+
     return LaunchDescription([
         SetEnvironmentVariable(name='GAZEBO_MODEL_PATH', value=[
             EnvironmentVariable('GAZEBO_MODEL_PATH'),
@@ -77,5 +92,6 @@ def generate_launch_description():
             ':',aws_robomaker_small_house_world_models,
             ':',pkg_sdf_models]),
         mirte_navigation_launch,
+        mirte_skills_launch,
         mirte_gazebo_launch,
     ])
