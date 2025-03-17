@@ -100,6 +100,10 @@ def generate_launch_description():
     mirte_laser_filters = Node(
         package="laser_filters",
         executable="scan_to_scan_filter_chain",
+        remappings=[
+            ("/scan", "/laser_filter/scan_unfiltered"),
+            ("/scan_filtered", "/scan"),
+        ],
         parameters=[
             PathJoinSubstitution([
                 get_package_share_directory("mirte_gazebo"),
