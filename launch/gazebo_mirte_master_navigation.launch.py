@@ -16,10 +16,11 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
+from launch_ros.actions import Node
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
-from launch.substitutions import EnvironmentVariable
+from launch.substitutions import EnvironmentVariable,PathJoinSubstitution
 from launch.actions import SetEnvironmentVariable
 
 
@@ -84,6 +85,15 @@ def generate_launch_description():
         }.items()
     )
 
+    mirte_laser_filters = Node(
+        package="laser_filters",
+        executable="scan_to_scan_filter_chain",
+        parameters=[
+            PathJoinSubstitution([
+                get_package_share_directory("mirte_gazebo"),
+                "config", "range_filter.yaml",
+            ])],
+    )
 
     return LaunchDescription([
         SetEnvironmentVariable(name='GAZEBO_MODEL_PATH', value=[
@@ -93,5 +103,6 @@ def generate_launch_description():
             ':',pkg_sdf_models]),
         mirte_navigation_launch,
         mirte_skills_launch,
+        mirte_laser_filters
         mirte_gazebo_launch,
     ])
