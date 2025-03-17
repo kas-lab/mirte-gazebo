@@ -16,15 +16,26 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
-from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
-from launch.substitutions import EnvironmentVariable,PathJoinSubstitution
+from launch.substitutions import EnvironmentVariable
+from launch.substitutions import LaunchConfiguration
+from launch.substitutions import PathJoinSubstitution
 from launch.actions import SetEnvironmentVariable
+from launch_ros.actions import Node
+
+
 
 
 def generate_launch_description():
+    visualize_sensors = LaunchConfiguration('visualize_sensors')
+    visualize_sensors_arg = DeclareLaunchArgument(
+        'visualize_sensors',
+        default_value='false'
+    )
+
     pkg_robocup_home_simulation = get_package_share_directory(
         'robocup_home_simulation')
     robocup_home_world_path = os.path.join(
@@ -42,6 +53,7 @@ def generate_launch_description():
         XMLLaunchDescriptionSource(mirte_gazebo_launch_path),
         launch_arguments={
             'world': robocup_home_world_path,
+            'visualize_sensors': visualize_sensors,
         }.items()
     )
 
@@ -101,6 +113,7 @@ def generate_launch_description():
             ':',plasys_house_world_models,
             ':',aws_robomaker_small_house_world_models,
             ':',pkg_sdf_models]),
+        visualize_sensors_arg,
         mirte_navigation_launch,
         mirte_skills_launch,
         mirte_laser_filters,
