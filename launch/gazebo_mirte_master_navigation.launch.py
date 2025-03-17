@@ -103,6 +103,6 @@ def generate_launch_description():
             ':',pkg_sdf_models]),
         mirte_navigation_launch,
         mirte_skills_launch,
-        mirte_laser_filters
+        mirte_laser_filters,
         mirte_gazebo_launch,
     ])
