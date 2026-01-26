@@ -98,7 +98,9 @@ def generate_launch_description():
             PathJoinSubstitution([
                 get_package_share_directory("mirte_gazebo"),
                 "config", "range_filter.yaml",
-            ])],
+            ]),
+            {"use_sim_time": True},
+        ],
     )
 
     return LaunchDescription([
